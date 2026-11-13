@@ -1,0 +1,31 @@
+{% extends 'adm/base.html' %}
+{% block content %}
+<h2 class="fw-bold">{{ title }}</h2>
+<p class="text-muted">{% if 'Add' in title %}Create a new task{% else %}Update the task details below{% endif %}</p>
+
+<div class="card p-4 shadow-sm">
+<form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label>Task Name</label>
+        {{ form.title }}
+    </div>
+    <div class="mb-3">
+        <label>Description</label>
+        {{ form.description }}
+    </div>
+    <div class="mb-3">
+        <label>Completed</label>
+        {{ form.completed }}
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{% url 'task_list' %}" class="btn btn-light w-50 border">Cancel</a>
+        <button type="submit" class="btn btn-success w-50">{% if 'Add' in title %}+ Add Task{% else %}Update Task{% endif %}</button>
+    </div>
+</form>
+</div>
+
+<style>
+    input[type=text], textarea, select { width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; }
+</style>
+{% endblock %}

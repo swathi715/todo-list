@@ -1,0 +1,27 @@
+{% extends 'adm/base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2 class="fw-bold">Task List</h2>
+        <small>Manage your tasks — {{ tasks.count }} total</small>
+    </div>
+    <a href="{% url 'add_task' %}" class="btn btn-success">+ Add Task</a>
+</div>
+
+{% for task in tasks %}
+<div class="card mb-2 shadow-sm">
+  <div class="card-body d-flex justify-content-between align-items-center">
+    <div>
+        <input type="checkbox" {% if task.completed %}checked{% endif %} disabled>
+        <b class="ms-2 {% if task.completed %}text-decoration-line-through{% endif %}">{{ task.title }}</b><br>
+        <small class="text-muted ms-4">{{ task.description }} {% if task.completed %} <span class="badge bg-success">Completed</span> {% else %} <span class="badge bg-warning">Pending</span> {% endif %}</small>
+    </div>
+    <div>
+        <a href="{% url 'edit_task' task.id %}" class="btn btn-outline-primary btn-sm">✏️ Edit</a>
+        <a href="{% url 'delete_task' task.id %}" class="btn btn-outline-danger btn-sm">🗑️ Delete</a>
+    </div>
+  </div>
+</div>
+{% empty %}
+{% endfor %}
+{% endblock %}
